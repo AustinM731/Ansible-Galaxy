@@ -1,0 +1,7 @@
+---
+- name: Add/Remove helm repository
+  kubernetes.core.helm_repository:
+    name: "{{ item.name }}"
+    url: "{{ item.url }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ helm_repos }}"

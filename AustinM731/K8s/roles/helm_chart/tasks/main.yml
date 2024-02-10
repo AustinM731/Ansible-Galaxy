@@ -1,0 +1,25 @@
+---
+- name: Add/Remove helm chart with values file
+  kubernetes.core.helm:
+    name: "{{ item.name }}"
+    chart_ref: "{{ item.chart_ref }}"
+    namespace: "{{ item.namespace }}"
+    values_files: "{{ item.values_files }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ helm_charts }}"
+  when:
+    - item.state == 'present'
+    - item.values_files is defined
+    - item.values_files | length > 0
+
+- name: Add/Remove helm chart without values file
+  kubernetes.core.helm:
+    name: "{{ item.name }}"
+    chart_ref: "{{ item.chart_ref }}"
+    namespace: "{{ item.namespace }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ helm_charts }}"
+  when:
+    - item.state == 'present'
+    - item.values_files is undefined or item.values_files | length == 0
+
