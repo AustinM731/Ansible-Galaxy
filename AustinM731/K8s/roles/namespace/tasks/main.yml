@@ -1,7 +1,7 @@
 ---
 - name: Add/Remove a k8s namespace
   kubernetes.core.k8s:
-    name: "{{ namespace}}"
+    name: "{{ namespace }}"
     api_version: v1
     kind: Namespace
     state: "{{ item.state | default('present') }}"
